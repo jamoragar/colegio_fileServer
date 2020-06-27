@@ -1,0 +1,39 @@
+.folder {
+    width: 150px;
+    height: 105px;
+    margin: 50px 20px 40px 20px;
+    position: relative;
+    background-color: #708090;
+    border-radius: 0 6px 6px 6px;
+    box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.59);
+    transition: transform .2s;
+}
+
+.folder:before {
+    content: '';
+    width: 50%;
+    height: 12px;
+    border-radius: 0 20px 0 0;
+    background-color: #708090;
+    position: absolute;
+    top: -12px;
+    left: 0px;
+}
+.folder:hover{
+  transform: scale(1.2);
+}
+.container{
+    display: flex;
+}
+.dir p{
+    font-weight: 900;
+    margin: -20px 30px;
+    color:black
+}
+.dir a:hover{
+    text-decoration: none;
+}
+
+.title{
+    margin: 35px 0 0 20px;
+}

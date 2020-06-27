@@ -1,0 +1,16 @@
+.card{
+    margin: 5% auto 0%; /* Added */
+    width:35%;
+    background-color: #f4f4f4 !important;
+}
+.login_card{
+    text-align:center;
+}
+.card-img{
+    margin: 0 auto;
+    width:40% !important;
+}
+.clickAca{
+    color: #0D0DF1;
+    cursor: pointer;
+}
