@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import moment from 'moment';
 import axios from 'axios';
 import './layout.scss';
 
@@ -66,7 +67,7 @@ const Videos  = ({uid}) => {
                     <div className="input-group col-xs-12">
                         <div className="custom-file" id="customFile">
                             <input type="file" className="custom-file-input" id="exampleInputFile" accept='video/*' aria-describedby="fileHelp" onChange={uploadVideo} />
-                            <label className="custom-file-label" for="exampleInputFile">
+                            <label className="custom-file-label" htmlFor="exampleInputFile">
                                 {fileName}
                             </label>
                         </div>
@@ -78,13 +79,19 @@ const Videos  = ({uid}) => {
                     </div>
                 </form>
             </div>
-            <div className="content">
+            <div className="content" style={{flexFlow:'wrap', display:'flex'}}>
                 {dirFiles.files.map((file, i) => {
+                    console.log(file)
                     return(
-                        <div key={i}>
-                            <video width='340' height='260' controls style={{marginLeft:'10px'}}>
-                                <source src={file} type='video/mp4' />
-                            </video>
+                        <div class="card" style={{width: '25rem'}}>
+                            <div className='videos' key={i} style={{width:'100%', height:'100%'}}>
+                                <video width='340' height='260' controls style={{marginLeft:'10px'}}>
+                                    <source src={file.url} type='video/mp4' />
+                                </video>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text" style={{textAlign:'center'}}>Fecha de Subida: {moment(file.modified_date).format('DD-MM-YYYY')}</p>
+                            </div>
                         </div>
                     )
                 })}

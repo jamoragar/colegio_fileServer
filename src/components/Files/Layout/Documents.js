@@ -80,10 +80,10 @@ const Documents  = ({uid}) => {
             </div>
             <div className="content">
                 {dirFiles.files.map((file, i) => {
-                    let file_splited = file.split('/');
+                    let file_splited = file.url.split('/');
                     return(
                         <div key={i}>
-                            <a href={file} target='_blank' rel="noopener noreferrer">#{file_splited[6]}</a>
+                            <a href={file.url} target='_blank' rel="noopener noreferrer">#{file_splited[6]}</a>
                             <br/>
                         </div>
                     )

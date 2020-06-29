@@ -84,11 +84,11 @@ const Photos  = ({uid}) => {
                 {dirFiles.files.map((file, i) => {
                     return(
                         <div className="img-wrap" key={i} rel="noopener noreferrer">
-                            <a href={`${file}`} target='_blank'>
+                            <a href={`${file.url}`} target='_blank'>
                                 <span className='view-image' title='Ver Imagen'>&loz;</span>
                             </a>
                             <span className='delete-image' title='Borrar Imagen'>&times;</span>
-                            <img src={`${file}`} width='230' alt={file} style={{marginLeft:'10px', marginTop:'10px'}} />
+                            <img src={`${file.url}`} width='230' alt={file} style={{marginLeft:'10px', marginTop:'10px'}} />
                         </div>
                     )
                 })}
