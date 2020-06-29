@@ -3,12 +3,13 @@ import axios from 'axios';
 import './layout.scss';
 
 const Documents  = ({uid}) => {
+    const API = 'http://186.103.189.220:9000';
     const [dirFiles, setDirFiles] = useState(null);
     const [files, setFiles] = useState(null);
     const [fileName, setFileName] = useState('Seleccionar Documento');
     const [uploadedFile, setUploadesFile] = useState({});
 
-    const subDirStat = fetch(`http://localhost:9000/documentos`,{
+    const subDirStat = fetch(`${API}/documentos`,{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -34,7 +35,7 @@ const Documents  = ({uid}) => {
         formData.append('dir_name', 'documentos');
 
         try{
-            const res = await axios.post('http://localhost:9000/upload', 
+            const res = await axios.post(`${API}/upload`, 
             formData
             , {
                 headers:{'Content-Type':'multipart/form-data'}

@@ -4,12 +4,13 @@ import './layout.scss';
 
 
 const Photos  = ({uid}) => {
+    const API = 'http://186.103.189.220:9000';
     const [dirFiles, setDirFiles] = useState(null);
     const [files, setFiles] = useState(null);
     const [fileName, setFileName] = useState ('Seleccionar Archivo');
     const [uploadedFile, setUploadesFile] = useState({});
 
-    const subDirStat = fetch(`http://localhost:9000/imagenes`,{
+    const subDirStat = fetch(`${API}/imagenes`,{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -36,7 +37,7 @@ const Photos  = ({uid}) => {
         console.log(formData)
 
         try{
-            const res = await axios.post('http://localhost:9000/upload', 
+            const res = await axios.post(`${API}/upload`, 
             formData
             , {
                 headers:{'Content-Type':'multipart/form-data'}

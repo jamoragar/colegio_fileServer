@@ -7,11 +7,12 @@ import {useParams} from 'react-router-dom';
 import {checkUser} from '../../firebase/fbFunctions';
 
 const Files = () => {
+    const API = 'http://186.103.189.220:9000';
     const {uid, file_id} = useParams();
     const [apiResponse, setApiResponse] = useState(null);
     
     const crearSubDirectorio = (file_id, uid) =>{
-        fetch(`http://localhost:9000/createSubFolder`,{
+        fetch(`${API}/createSubFolder`,{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

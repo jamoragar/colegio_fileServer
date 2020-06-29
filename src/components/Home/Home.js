@@ -9,10 +9,11 @@ import './Home.css'
 
 const Home = ({user}) => {
     let userInfo;
+    const API = 'http://186.103.189.220:9000';
     const [apiResponse, setApiResponse] = useState(null);
 
     const inicializarUsuario = (uid, level) => {
-        fetch(`http://localhost:9000/initFolder`,{
+        fetch(`${API}/initFolder`,{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
