@@ -15,7 +15,8 @@ const Videos  = ({uid}) => {
             uid: uid,
             dir_name: 'videos'
         })
-    })
+    });
+
     useEffect(() => {
         subDirStat.then(res => res.json())
             .then(res => setDirFiles(res))
@@ -63,9 +64,9 @@ const Videos  = ({uid}) => {
             <div className="container">
                 <form className="form-group" id="fileForm" onSubmit={uploadFile}>
                     <div className="input-group col-xs-12">
-                        <div class="custom-file" id="customFile">
-                            <input type="file" class="custom-file-input" id="exampleInputFile" accept='video/*' aria-describedby="fileHelp" onChange={uploadVideo} />
-                            <label class="custom-file-label" for="exampleInputFile">
+                        <div className="custom-file" id="customFile">
+                            <input type="file" className="custom-file-input" id="exampleInputFile" accept='video/*' aria-describedby="fileHelp" onChange={uploadVideo} />
+                            <label className="custom-file-label" for="exampleInputFile">
                                 {fileName}
                             </label>
                         </div>
@@ -82,7 +83,7 @@ const Videos  = ({uid}) => {
                     return(
                         <div key={i}>
                             <video width='340' height='260' controls style={{marginLeft:'10px'}}>
-                                <source src={file} type='video/*' />
+                                <source src={file} type='video/mp4' />
                             </video>
                         </div>
                     )
