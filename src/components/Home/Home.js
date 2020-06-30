@@ -21,10 +21,10 @@ const Home = ({user}) => {
                 level: level
             })
         })
-        .then(res => res)
-        .then(res => setApiResponse(res.json()))
-        .catch(err => console.log(err));
-    };
+        .then(res => res.text())
+        .then(res => setApiResponse(res))
+        .catch(err => console.log(err))
+    }
 
     useEffect(() => {
         userInfo = checkUser(user.uid);
@@ -34,7 +34,7 @@ const Home = ({user}) => {
     },[])
 
     if(apiResponse){
-        apiResponse.then(data => console.log(data))
+        console.log(apiResponse)
         return(
             <>
             <h2 className='title'>Carpetas Personales:</h2>

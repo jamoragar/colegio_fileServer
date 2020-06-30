@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import {ProgressBar} from 'react-bootstrap';
 import axios from 'axios';
 import './layout.scss';
 
 
 const Photos  = ({uid}) => {
     const API = 'http://186.103.189.220:9000';
+    const [progress, setProgress] = useState(0);
     const [dirFiles, setDirFiles] = useState(null);
     const [files, setFiles] = useState(null);
     const [fileName, setFileName] = useState ('Seleccionar Archivo');
@@ -19,7 +21,7 @@ const Photos  = ({uid}) => {
         })
     })
     useEffect(() => {
-        subDirStat.then(res => res.json())
+        subDirStat.then(res => res)
             .then(res => setDirFiles(res))
     }, [uploadedFile]);
 
@@ -34,12 +36,10 @@ const Photos  = ({uid}) => {
         formData.append('file', files);
         formData.append('uid', uid);
         formData.append('dir_name','imagenes');
-        console.log(formData)
 
         try{
-            const res = await axios.post(`${API}/upload`, 
-            formData
-            , {
+            const res = await axios.post(`${API}/upload`, formData, {
+                onUploadProgress: e => setProgress(Math.round(e.loaded * 100 / e.total)),
                 headers:{'Content-Type':'multipart/form-data'}
             });
 
@@ -67,9 +67,9 @@ const Photos  = ({uid}) => {
             <div className="container">
                 <form className="form-group" onSubmit={uploadFile}>
                     <div className="input-group col-xs-12">
-                        <div class="custom-file" id="customFile">
-                            <input type="file" class="custom-file-input" id="exampleInputFile" accept='image/*' aria-describedby="fileHelp" onChange={uploadPhoto}/>
-                            <label class="custom-file-label" for="exampleInputFile">
+                        <div className="custom-file" id="customFile">
+                            <input type="file" className="custom-file-input" id="exampleInputFile" accept='image/*' aria-describedby="fileHelp" onChange={uploadPhoto}/>
+                            <label className="custom-file-label" for="exampleInputFile">
                                 {fileName}
                             </label>
                         </div>
@@ -79,12 +79,14 @@ const Photos  = ({uid}) => {
                             </button>
                         </span>
                     </div>
+                    <br />
+                    <ProgressBar now={progress} label={`${progress}%`} />
                 </form>
             </div>
             <div className="content">
                 {dirFiles.files.map((file, i) => {
                     return(
-                        <div className="img-wrap" key={i} rel="noopener noreferrer">
+                        <div key={i} className="img-wrap" key={i} rel="noopener noreferrer">
                             <a href={`${file.url}`} target='_blank'>
                                 <span className='view-image' title='Ver Imagen'>&loz;</span>
                             </a>

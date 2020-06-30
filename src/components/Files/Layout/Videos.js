@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import {ProgressBar} from 'react-bootstrap';
 import moment from 'moment';
 import axios from 'axios';
 import './layout.scss';
 
 const Videos  = ({uid}) => {
-    const API = 'http://186.103.189.220:9000';
+    const API = 'https://186.103.189.220:9000';
+    const [progress, setProgress] = useState(0);
     const [dirFiles, setDirFiles] = useState(null);
     const [files, setFiles] = useState(null);
     const [fileName, setFileName] = useState('Seleccionar Video');
@@ -20,7 +22,8 @@ const Videos  = ({uid}) => {
     });
 
     useEffect(() => {
-        subDirStat.then(res => res.json())
+        subDirStat.then(res => {console.log(res.clone().json())
+             return res.json()})
             .then(res => setDirFiles(res))
     }, [uploadedFile]);
 
@@ -36,9 +39,8 @@ const Videos  = ({uid}) => {
         formData.append('dir_name','videos');
 
         try{
-            const res = await axios.post(`${API}/upload`, 
-            formData
-            , {
+            const res = await axios.post(`${API}/upload`, formData, {
+                onUploadProgress: e => setProgress(Math.round(e.loaded * 100 / e.total)),
                 headers:{'Content-Type':'multipart/form-data'}
             });
 
@@ -55,6 +57,7 @@ const Videos  = ({uid}) => {
     }
     
     if(dirFiles){
+        console.log(dirFiles)
         return(
             <>
             <br/>
@@ -78,20 +81,21 @@ const Videos  = ({uid}) => {
                             </button>
                         </span>
                     </div>
+                    <br />
+                    <ProgressBar now={progress} label={`${progress}%`} />
                 </form>
             </div>
             <div className="content" style={{flexFlow:'wrap', display:'flex'}}>
                 {dirFiles.files.map((file, i) => {
-                    console.log(file)
                     return(
-                        <div class="card" style={{width: '25rem'}}>
+                        <div key={i} className="card" style={{width: '25rem'}}>
                             <div className='videos' key={i} style={{width:'100%', height:'100%'}}>
                                 <video width='340' height='260' controls style={{marginLeft:'10px'}}>
                                     <source src={file.url} type='video/mp4' />
                                 </video>
                             </div>
-                            <div class="card-body">
-                                <p class="card-text" style={{textAlign:'center'}}>Fecha de Subida: {moment(file.modified_date).format('DD-MM-YYYY')}</p>
+                            <div className="card-body">
+                                <p className="card-text" style={{textAlign:'center'}}>Fecha de Subida: {moment(file.modified_date).format('DD-MM-YYYY')}</p>
                             </div>
                         </div>
                     )

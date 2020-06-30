@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import {ProgressBar} from 'react-bootstrap';
 import axios from 'axios';
 import './layout.scss';
 
 const Others  = ({uid}) => {
     const API = 'http://186.103.189.220:9000';
+    const [progress, setProgress] = useState(0);
     const [dirFiles, setDirFiles] = useState(null);
     const [files, setFiles] = useState(null);
     const [fileName, setFileName] = useState('Seleccionar Archivo');
@@ -11,6 +13,8 @@ const Others  = ({uid}) => {
 
     const subDirStat = fetch(`${API}/otros`,{
         method: 'POST',
+        mode: 'no-cors',
+        referrerPolicy: 'unsafe-url',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
             uid: uid,
@@ -34,9 +38,8 @@ const Others  = ({uid}) => {
         formData.append('dir_name','otros');
 
         try{
-            const res = await axios.post(`${API}/upload`, 
-            formData
-            , {
+            const res = await axios.post(`${API}/upload`, formData, {
+                onUploadProgress: e => setProgress(Math.round(e.loaded * 100 / e.total)),
                 headers:{'Content-Type':'multipart/form-data'}
             });
 
@@ -77,6 +80,8 @@ const Others  = ({uid}) => {
                             </button>
                         </span>
                     </div>
+                    <br />
+                    <ProgressBar now={progress} label={`${progress}%`} />
                 </form>
             </div>
             <div className="content">
